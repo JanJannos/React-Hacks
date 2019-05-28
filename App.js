@@ -5,9 +5,9 @@ import Person from './Person/Person';
 class App extends Component {
   state = {
     persons: [
-      { name: 'James', age: 28 },
-      { name: 'Jonas', age: 29 },
-      { name: 'Jimmi', age: 26 }
+      { id: 'x1' , name: 'James', age: 28 },
+      { id: 'x2' ,name: 'Jonas', age: 29 },
+      { id: 'x3' ,name: 'Jimmi', age: 26 }
     ],
     otherState: 'some other value',
     showPersons: false
@@ -23,21 +23,62 @@ class App extends Component {
     } )
   }
 
-  nameChangedHandler = (event) => {
+  nameChangedHandler = (event , id) => {
+    
+    // get the person index
+    const personIndex = this.state.persons.findIndex(person =>{ 
+        return person.id === id;
+      });
+
+    // get the person object
+    // but here we get a pointer !!!
+    
+    const badApproachPerson = this.state.persons[personIndex];    // !! BAD
+
+    // There is a another GOOD approach like this 
+    const goodApproachPerson = Object.assign({} , this.state.persons[personIndex]);
+
+    // a better approach is to create a new JS Object
+    // here we're not manipulating the original object , but the COPY
+
+    const updatedPerson = {
+      ...this.state.persons[personIndex]
+    };
+
+    updatedPerson.name = event.target.value;
+
+    const personsArrayUpdated = [...this.state.persons];
+    personsArrayUpdated[personIndex] = updatedPerson;
+
+
+    // And now we can remove this piece of Hardcoded code
+
+    // this.setState( {
+    //   persons: [
+    //     { name: 'Mario', age: 28 },
+    //     { name: event.target.value, age: 29 },
+    //     { name: 'Miriam', age: 26 }
+    //   ]
+    // } )
+
     this.setState( {
-      persons: [
-        { name: 'Mario', age: 28 },
-        { name: event.target.value, age: 29 },
-        { name: 'Miriam', age: 26 }
-      ]
-    } )
+      persons: personsArrayUpdated});
   }
 
 
   deletePersonsHandler = (index) => {
-      const personsState = this.state.persons;
+      
+      // this is a BAD practice - we get a pointer , a reference to the persons array
+
+      // const personsState = this.state.persons;
+      // personsState.splice(index , 1);
+      // this.setState({persons : personsState });       
+      
+
+      // this approach creates a new array
+      const personsState = [...this.state.persons];
       personsState.splice(index , 1);
-      this.setState({persons : personsState });       
+      this.setState({persons : personsState });   
   }
 
   togglePersonsHandler = () => {
@@ -54,12 +95,6 @@ class App extends Component {
       padding: '8px'
     };
 
-
-
-
-    // Now we can automate everything using MAP 
-    // Take a look below 
-
     let persons = null;
     if (this.state.showPersons) {
         persons = (
@@ -69,20 +104,9 @@ class App extends Component {
                                 click={() => this.deletePersonsHandler(index)}
                                 name={per.name} 
                                 age={per.age}
-                                key={index}/>  
-                  })}
-
-              {/* <Person       
-              name={this.state.persons[0].name} 
-              age={this.state.persons[0].age} />
-              <Person 
-              name={this.state.persons[1].name} 
-              age={this.state.persons[1].age}
-              click={this.switchNameHandler.bind(this, 'Rocko!')}
-              changed={this.nameChangedHandler} >My Hobbies: Racing</Person>
-              <Person 
-              name={this.state.persons[2].name} 
-              age={this.state.persons[2].age} /> */}
+                                key={per.id}
+                                changes={(event) => this.nameChangedHandler(event , per.id)}/>  
+                  })}       
          </div> 
         );
     }
