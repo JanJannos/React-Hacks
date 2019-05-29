@@ -89,10 +89,12 @@ class App extends Component {
   render () {
 
     const myBtnStyle = {
-      backgroundColor: 'white' , 
+      backgroundColor: 'green' , 
+      color:'white' ,
       font: 'inherit' , 
       border: '1x solid blue' ,
-      padding: '8px'
+      padding: '8px' ,
+      cursor: 'pointer'
     };
 
     let persons = null;
@@ -109,14 +111,19 @@ class App extends Component {
                   })}           
          </div> 
         );
+
+        myBtnStyle.backgroundColor = 'red';
     }
+
+
+    let classes = ['red,bold'].join(' '); // "red bold"
 
     // We use the changed propery in the Person class
 
     return (
       <div className="App">
         <h1>Hi, I'm a React App</h1>
-        <p>This is really working!</p>
+        <p className={classes}>This is really working!</p>
         {/* <button style={myBtnStyle} onClick={() => this.switchNameHandler('Ricki!!')}>Switch Name</button>*/}
         <button style={myBtnStyle} onClick={this.togglePersonsHandler}>Toggle Names</button>  
         {persons}
