@@ -105,11 +105,13 @@ class App extends Component {
                                 name={per.name} 
                                 age={per.age}
                                 key={per.id}
-                                changes={(event) => this.nameChangedHandler(event , per.id)}/>  
-                  })}       
+                                changed={(event) => this.nameChangedHandler(event , per.id)}/>  
+                  })}           
          </div> 
         );
     }
+
+    // We use the changed propery in the Person class
 
     return (
       <div className="App">
