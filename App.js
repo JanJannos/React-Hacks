@@ -1,10 +1,10 @@
-/* Version 2  */
-/* Last updated 30-05-19 1:11 AM */
+/* Version 3  */
+/* Last updated 30-05-19 10:00 AM */
 
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
-import Radium from 'radium';
+import Radium , {StyleRoot} from 'radium';
 
 
 class App extends Component {
@@ -143,15 +143,19 @@ class App extends Component {
 
     // We use the changed propery in the Person class
 
+
+      // Here we gonna use StyleRoot
+
     return (
-      <div className="App">
-        <h1>Hi, I'm a React App</h1>
-        {/* <p className={classes}>This is really working!</p> */}
-        <p className={classes.join(' ')}>This is really working!</p>
-        {/* <button style={myBtnStyle} onClick={() => this.switchNameHandler('Ricki!!')}>Switch Name</button>*/}
-        <button style={myBtnStyle} onClick={this.togglePersonsHandler}>Toggle Names</button>  
-        {persons}
-      </div>      
+
+      <StyleRoot>
+        <div className="App">
+          <h1>Hi, I'm a React App</h1>        
+          <p className={classes.join(' ')}>This is really working!</p>        
+          <button style={myBtnStyle} onClick={this.togglePersonsHandler}>Toggle Names</button>  
+          {persons}
+        </div>
+      </StyleRoot> 
     );
   }
 }
