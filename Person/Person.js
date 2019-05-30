@@ -1,20 +1,21 @@
 import React from 'react';
 import './Person.css'
-import Radium from 'radium';
+// import Radium from 'radium';
 
 
 const person = ( props ) => {
     
-    const myStyle = {
-        '@media (min-width: 500px)' : {
-            width: '450px'
-        }
-    };
+    // const myStyle = {
+    //     '@media (min-width: 500px)' : {
+    //         width: '450px'
+    //     }
+    // };
     
 
     // the style (myStyle) will override my class (Person) settings 
     return (
-        <div className="Person" style={this.myStyle}>
+        // <div className="Person" style={this.myStyle}>
+        <div className="Person"  >
             <p onClick={props.click}>I'm {props.name} and I am {props.age} years old!</p>
             <p>{props.children}</p>
             <input type="text" 
@@ -24,4 +25,5 @@ const person = ( props ) => {
     )
 };
 
-export default Radium(person);
+// export default Radium(person);
+export default person;
